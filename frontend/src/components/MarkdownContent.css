@@ -1,0 +1,146 @@
+.markdown-content {
+  line-height: 1.6;
+}
+
+.markdown-content p {
+  margin: 0.5rem 0;
+}
+
+.markdown-content p:first-child {
+  margin-top: 0;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin: 1rem 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.markdown-content h1 {
+  font-size: 1.5rem;
+}
+
+.markdown-content h2 {
+  font-size: 1.3rem;
+}
+
+.markdown-content h3 {
+  font-size: 1.1rem;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+  color: inherit;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content a {
+  color: #667eea;
+  text-decoration: underline;
+}
+
+.markdown-content a:hover {
+  color: #5568d3;
+}
+
+.markdown-inline-code {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.message-item-user .markdown-inline-code {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.markdown-code-block {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.message-item-user .markdown-code-block {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.markdown-code-block code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+  display: block;
+  white-space: pre;
+}
+
+.markdown-list {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.markdown-list li {
+  margin: 0.25rem 0;
+}
+
+.markdown-blockquote {
+  border-left: 4px solid #667eea;
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  font-style: italic;
+  color: #666;
+}
+
+.message-item-user .markdown-blockquote {
+  border-left-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.markdown-content hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 1rem 0;
+}
+
+.message-item-user .markdown-content hr {
+  border-top-color: rgba(255, 255, 255, 0.3);
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.markdown-content table th {
+  background: rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+}
+
+.message-item-user .markdown-content table th {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.message-item-user .markdown-content table th,
+.message-item-user .markdown-content table td {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+

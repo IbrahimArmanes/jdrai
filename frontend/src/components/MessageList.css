@@ -1,0 +1,94 @@
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+.message-list-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-style: italic;
+}
+
+.message-item {
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-item-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message-item-assistant {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  word-wrap: break-word;
+}
+
+.message-item-user .message-content {
+  background: #667eea;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-item-assistant .message-content {
+  background: #f0f0f0;
+  color: #333;
+  border-bottom-left-radius: 4px;
+}
+
+.message-header {
+  margin-bottom: 0.25rem;
+}
+
+.message-role {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.message-item-user .message-role {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.message-item-assistant .message-role {
+  color: #666;
+}
+
+.message-text {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.message-item-user .message-text {
+  color: white;
+}
+
+.message-item-assistant .message-text {
+  color: #333;
+}
+

@@ -1,0 +1,110 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #ffffff;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.chat-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-button-secondary {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-button-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-button-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chat-context-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: #e8f0fe;
+  color: #0d6efd;
+  border-bottom: 1px solid #cfe2ff;
+  font-size: 0.9rem;
+}
+
+.chat-context-remove {
+  background: none;
+  border: none;
+  color: #0d6efd;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.chat-context-remove:hover {
+  color: #0a58ca;
+}
+
+.chat-error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: #f8d7da;
+  color: #721c24;
+  border-bottom: 1px solid #f5c2c7;
+  font-size: 0.9rem;
+}
+
+.chat-error button {
+  background: none;
+  border: none;
+  color: #721c24;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.chat-error button:hover {
+  background: rgba(114, 28, 36, 0.1);
+}
+
+.chat-messages-container {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+

@@ -63,7 +63,7 @@
           "id": "task-000-002",
           "title": "Basic Deepseek API Integration",
           "description": "Create a simple service layer to interact with Deepseek-V3.2 Exp API for basic chat functionality",
-          "status": "pending",
+          "status": "completed",
           "priority": "critical",
           "estimatedHours": 6,
           "complexity": "medium",
@@ -73,28 +73,28 @@
               "id": "subtask-000-002-001",
               "title": "Create basic Deepseek API client",
               "description": "Build simple API client to handle HTTP requests to Deepseek API with authentication and basic request/response handling",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 2
             },
             {
               "id": "subtask-000-002-002",
               "title": "Implement basic error handling",
               "description": "Add basic error handling for API failures and retry logic",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             },
             {
               "id": "subtask-000-002-003",
               "title": "Create API configuration manager",
               "description": "Build simple configuration system for API keys and model settings",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             },
             {
               "id": "subtask-000-002-004",
               "title": "Implement context parameter support",
               "description": "Add support for optional context parameter that can be added before starting conversation (system message or initial context)",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 2
             }
           ]
@@ -103,7 +103,7 @@
           "id": "task-000-003",
           "title": "Simple Chat Interface",
           "description": "Build a simple chat interface similar to Deepseek's UI with conversation display and input",
-          "status": "pending",
+          "status": "completed",
           "priority": "critical",
           "estimatedHours": 8,
           "complexity": "medium",
@@ -113,42 +113,42 @@
               "id": "subtask-000-003-001",
               "title": "Create Express API route for chat",
               "description": "Build POST /api/chat endpoint to handle chat messages and forward to Deepseek API",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             },
             {
               "id": "subtask-000-003-002",
               "title": "Build React chat interface component",
               "description": "Create main chat component with message display area and input field",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 2
             },
             {
               "id": "subtask-000-003-003",
               "title": "Implement conversation history display",
               "description": "Build component to display conversation messages with proper formatting and scrolling",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 2
             },
             {
               "id": "subtask-000-003-004",
               "title": "Create message input component",
               "description": "Build input component with text field, submit button, and loading states",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             },
             {
               "id": "subtask-000-003-005",
               "title": "Add context parameter UI",
               "description": "Create UI component/setting to allow user to set initial context before starting conversation (optional textarea or modal)",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             },
             {
               "id": "subtask-000-003-006",
               "title": "Add basic styling",
               "description": "Add CSS/styling for chat interface to make it clean and functional",
-              "status": "pending",
+              "status": "completed",
               "estimatedHours": 1
             }
           ]
