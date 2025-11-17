@@ -84,3 +84,26 @@ The frontend will run on `http://localhost:3000`
 
 This phase implements a basic chat interface similar to online LLM services, with support for context parameters.
 
+## GitHub Setup
+
+The project is initialized with Git. To connect to GitHub:
+
+1. Create a new repository on GitHub (do not initialize with README, .gitignore, or license)
+
+2. Add the remote repository:
+```bash
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
+```
+
+3. Push to GitHub:
+```bash
+git push -u origin main
+```
+
+## Contributing
+
+1. Create a feature branch: `git checkout -b feature/your-feature-name`
+2. Make your changes and commit: `git commit -m "Description of changes"`
+3. Push to your branch: `git push origin feature/your-feature-name`
+4. Create a Pull Request on GitHub
+
