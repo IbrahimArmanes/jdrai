@@ -1,0 +1,638 @@
+{
+  "phases": [
+    {
+      "phase": "Phase 0: Simple LLM Chat Interface",
+      "description": "Create a simple chat interface similar to online LLM services like Deepseek, with basic project setup and context parameter support",
+      "estimatedDuration": "3-5 days",
+      "tasks": [
+        {
+          "id": "task-000-001",
+          "title": "Project Setup & Infrastructure",
+          "description": "Set up the basic full-stack JavaScript project with React frontend and Express backend, including project structure, dependencies, and development environment",
+          "status": "completed",
+          "priority": "critical",
+          "estimatedHours": 6,
+          "complexity": "medium",
+          "dependencies": [],
+          "subtasks": [
+            {
+              "id": "subtask-000-001-001",
+              "title": "Initialize Express backend project",
+              "description": "Create Express.js project structure with basic folder organization (routes, controllers, services, utils)",
+              "status": "completed",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-001-002",
+              "title": "Initialize React frontend project",
+              "description": "Create React project with basic folder structure (components, pages, services, utils)",
+              "status": "completed",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-001-003",
+              "title": "Configure development environment",
+              "description": "Set up environment variables, .env files, and development scripts (npm scripts for both frontend and backend)",
+              "status": "completed",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-001-004",
+              "title": "Install core dependencies",
+              "description": "Install essential dependencies: Express, React, axios/fetch, dotenv, cors, body-parser",
+              "status": "completed",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-001-005",
+              "title": "Set up CORS and basic API communication",
+              "description": "Configure CORS for frontend-backend communication and create basic API service layer in React",
+              "status": "completed",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-001-006",
+              "title": "Set up basic error handling",
+              "description": "Create basic error handling middleware for Express and error boundary for React",
+              "status": "completed",
+              "estimatedHours": 1
+            }
+          ]
+        },
+        {
+          "id": "task-000-002",
+          "title": "Basic Deepseek API Integration",
+          "description": "Create a simple service layer to interact with Deepseek-V3.2 Exp API for basic chat functionality",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 6,
+          "complexity": "medium",
+          "dependencies": ["task-000-001"],
+          "subtasks": [
+            {
+              "id": "subtask-000-002-001",
+              "title": "Create basic Deepseek API client",
+              "description": "Build simple API client to handle HTTP requests to Deepseek API with authentication and basic request/response handling",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-000-002-002",
+              "title": "Implement basic error handling",
+              "description": "Add basic error handling for API failures and retry logic",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-002-003",
+              "title": "Create API configuration manager",
+              "description": "Build simple configuration system for API keys and model settings",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-002-004",
+              "title": "Implement context parameter support",
+              "description": "Add support for optional context parameter that can be added before starting conversation (system message or initial context)",
+              "status": "pending",
+              "estimatedHours": 2
+            }
+          ]
+        },
+        {
+          "id": "task-000-003",
+          "title": "Simple Chat Interface",
+          "description": "Build a simple chat interface similar to Deepseek's UI with conversation display and input",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 8,
+          "complexity": "medium",
+          "dependencies": ["task-000-002"],
+          "subtasks": [
+            {
+              "id": "subtask-000-003-001",
+              "title": "Create Express API route for chat",
+              "description": "Build POST /api/chat endpoint to handle chat messages and forward to Deepseek API",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-003-002",
+              "title": "Build React chat interface component",
+              "description": "Create main chat component with message display area and input field",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-000-003-003",
+              "title": "Implement conversation history display",
+              "description": "Build component to display conversation messages with proper formatting and scrolling",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-000-003-004",
+              "title": "Create message input component",
+              "description": "Build input component with text field, submit button, and loading states",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-003-005",
+              "title": "Add context parameter UI",
+              "description": "Create UI component/setting to allow user to set initial context before starting conversation (optional textarea or modal)",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-000-003-006",
+              "title": "Add basic styling",
+              "description": "Add CSS/styling for chat interface to make it clean and functional",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "totalTasks": 3,
+        "totalSubtasks": 16,
+        "totalEstimatedHours": 20,
+        "criticalPath": ["task-000-001", "task-000-002", "task-000-003"]
+      }
+    },
+    {
+      "phase": "Phase 1: Core MVP",
+      "description": "Basic functionality to get the game running with World Engine, player interaction, time tracking, state saving, and basic instances",
+      "estimatedDuration": "2 weeks",
+      "tasks": [
+        {
+          "id": "task-001",
+          "title": "Enhanced Deepseek API Integration Layer",
+          "description": "Extend the basic API integration from Phase 0 with advanced features: token counting, cost tracking, prompt templates, and rate limiting",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 10,
+          "complexity": "high",
+          "dependencies": [],
+          "subtasks": [
+            {
+              "id": "subtask-001-001",
+              "title": "Enhance Deepseek API client",
+              "description": "Extend existing API client with advanced features: better error handling, response parsing, and structured data extraction",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-001-002",
+              "title": "Implement token counting and cost tracking",
+              "description": "Create utilities to count input/output tokens and calculate costs based on cache hit/miss rates",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-001-003",
+              "title": "Create prompt template system",
+              "description": "Build prompt template manager for standardized prompts (World Engine, Instance thinking, etc.) to maximize cache hits",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-001-004",
+              "title": "Implement advanced retry logic",
+              "description": "Add exponential backoff retry logic and improved error handling for API failures",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-001-005",
+              "title": "Create API response parser",
+              "description": "Build parser to extract structured data from LLM responses (JSON parsing, validation, error handling)",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-001-006",
+              "title": "Implement rate limiting",
+              "description": "Add rate limiting to prevent API overload and manage concurrent requests",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        },
+        {
+          "id": "task-002",
+          "title": "World Engine Core",
+          "description": "Implement the core World Engine that processes player actions, maintains game state, and coordinates with LLM",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 16,
+          "complexity": "high",
+          "dependencies": ["task-001"],
+          "subtasks": [
+            {
+              "id": "subtask-002-001",
+              "title": "Create World Engine service class",
+              "description": "Build main WorldEngine class with methods for processing actions, managing state, and coordinating with LLM",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-002-002",
+              "title": "Implement player context management",
+              "description": "Create system to manage player conversation history (rolling window of 20-30 exchanges), current state, and known information",
+              "status": "pending",
+              "estimatedHours": 3
+            },
+            {
+              "id": "subtask-002-003",
+              "title": "Build player action processor",
+              "description": "Implement method to process player actions: prepare context, send to LLM, parse response, update game state",
+              "status": "pending",
+              "estimatedHours": 3
+            },
+            {
+              "id": "subtask-002-004",
+              "title": "Create game state manager",
+              "description": "Build GameState class to manage current game state (player, instances, world events, time)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-002-005",
+              "title": "Implement lazy loading for instances",
+              "description": "Create system to query instance states only when player interacts with them (lazy loading pattern)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-002-006",
+              "title": "Build world context loader",
+              "description": "Create system to load and manage world context (world rules, locations, basic information) for LLM prompts",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-002-007",
+              "title": "Implement narrative response generator",
+              "description": "Create method to format LLM responses into narrative text for player, ensuring consistency and immersion",
+              "status": "pending",
+              "estimatedHours": 2
+            }
+          ]
+        },
+        {
+          "id": "task-003",
+          "title": "Game Interaction System",
+          "description": "Extend the chat interface from Phase 0 to support game-specific interactions, including game state display and enhanced UI",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 16,
+          "complexity": "high",
+          "dependencies": ["task-002"],
+          "subtasks": [
+            {
+              "id": "subtask-003-001",
+              "title": "Create Express API routes for game actions",
+              "description": "Build REST API endpoints: POST /api/action (send player action), GET /api/state (get current game state), GET /api/history (get conversation history)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-002",
+              "title": "Enhance React game interface",
+              "description": "Extend existing chat interface with game-specific features: game state visualization, action context, and RPG-specific UI elements",
+              "status": "pending",
+              "estimatedHours": 3
+            },
+            {
+              "id": "subtask-003-003",
+              "title": "Enhance conversation history display",
+              "description": "Improve conversation display with game-specific formatting, action types, and narrative styling",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-004",
+              "title": "Enhance player input component",
+              "description": "Extend input component with game-specific features: action suggestions, input validation, and context hints",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-005",
+              "title": "Enhance API service in React",
+              "description": "Extend API service layer to handle game-specific requests, error handling, and response parsing",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-006",
+              "title": "Build game state display component",
+              "description": "Create component to display current game state: location, time, player status (inventory, relationships, etc.)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-007",
+              "title": "Implement enhanced loading and error states",
+              "description": "Add improved loading indicators, error messages, and retry functionality in UI",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-003-008",
+              "title": "Enhance styling and layout",
+              "description": "Improve CSS/styling for game interface, make it responsive and visually appealing with RPG theme",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        },
+        {
+          "id": "task-004",
+          "title": "Time System",
+          "description": "Implement player-centric time tracking system that advances time based on player actions",
+          "status": "pending",
+          "priority": "high",
+          "estimatedHours": 10,
+          "complexity": "medium",
+          "dependencies": ["task-002"],
+          "subtasks": [
+            {
+              "id": "subtask-004-001",
+              "title": "Create TimeManager class",
+              "description": "Build TimeManager to track game time (day, time of day), calculate time advancement, and manage time state",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-004-002",
+              "title": "Implement time advancement logic",
+              "description": "Create system to calculate time advancement based on action type (conversation, travel, combat, rest) using LLM",
+              "status": "pending",
+              "estimatedHours": 3
+            },
+            {
+              "id": "subtask-004-003",
+              "title": "Build time display formatter",
+              "description": "Create utility to format time as 'Day X - Time of Day' for display in UI",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-004-004",
+              "title": "Integrate time system with World Engine",
+              "description": "Connect TimeManager with World Engine to advance time after each player action",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-004-005",
+              "title": "Add time display to UI",
+              "description": "Display current game time in React UI component",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-004-006",
+              "title": "Implement time persistence",
+              "description": "Ensure time state is saved and loaded with game state",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        },
+        {
+          "id": "task-005",
+          "title": "State Management & Persistence",
+          "description": "Implement game state saving/loading system using JSON files, including snapshots for rollback functionality",
+          "status": "pending",
+          "priority": "critical",
+          "estimatedHours": 12,
+          "complexity": "medium",
+          "dependencies": ["task-002"],
+          "subtasks": [
+            {
+              "id": "subtask-005-001",
+              "title": "Create StateManager service",
+              "description": "Build StateManager class to handle saving and loading game state from JSON files",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-005-002",
+              "title": "Implement snapshot system",
+              "description": "Create system to save state snapshots before each player action for rollback capability",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-005-003",
+              "title": "Build state serialization/deserialization",
+              "description": "Implement methods to serialize game state to JSON and deserialize from JSON with proper data validation",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-005-004",
+              "title": "Create save/load game functionality",
+              "description": "Implement save game (save current state to file) and load game (load state from file) methods",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-005-005",
+              "title": "Implement incremental saves",
+              "description": "Add functionality to only save changed data (incremental saves) to reduce I/O operations",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-005-006",
+              "title": "Add save/load UI in React",
+              "description": "Create UI components for saving and loading games, with file selection and save game list",
+              "status": "pending",
+              "estimatedHours": 2
+            }
+          ]
+        },
+        {
+          "id": "task-006",
+          "title": "Basic Instance System",
+          "description": "Create the basic instance system with 2-3 test instances (1 NPC, 1 City), including instance data structures and basic management",
+          "status": "pending",
+          "priority": "high",
+          "estimatedHours": 14,
+          "complexity": "medium",
+          "dependencies": ["task-001", "task-005"],
+          "subtasks": [
+            {
+              "id": "subtask-006-001",
+              "title": "Create Instance data model",
+              "description": "Build Instance class/data structure with properties: id, type, name, goals, memory, state, location, lastActivation",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-002",
+              "title": "Create InstanceManager service",
+              "description": "Build InstanceManager class to manage instances: create, retrieve, update, list instances",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-003",
+              "title": "Implement instance memory system",
+              "description": "Create system for instances to store and retrieve their own memory (events, relationships, known information)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-004",
+              "title": "Build instance goal system",
+              "description": "Implement basic goal structure for instances (NPC: 1 main + 2 sub-goals, City: generic + specific goals)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-005",
+              "title": "Create test instance data",
+              "description": "Create 2-3 test instances (1 NPC, 1 City) with initial data, goals, and state for testing",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-006",
+              "title": "Implement instance persistence",
+              "description": "Add functionality to save and load instances from JSON files",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-006-007",
+              "title": "Create instance context builder",
+              "description": "Build system to prepare instance context (memory, goals, state) for LLM prompts",
+              "status": "pending",
+              "estimatedHours": 2
+            }
+          ]
+        },
+        {
+          "id": "task-007",
+          "title": "Basic Instance Activation",
+          "description": "Implement basic time-based instance activation system where instances activate based on time since last activation",
+          "status": "pending",
+          "priority": "high",
+          "estimatedHours": 12,
+          "complexity": "medium",
+          "dependencies": ["task-004", "task-006"],
+          "subtasks": [
+            {
+              "id": "subtask-007-001",
+              "title": "Create activation checker",
+              "description": "Build system to check which instances should activate based on time since last activation (minimum 7 days)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-007-002",
+              "title": "Implement instance thinking cycle",
+              "description": "Create method for instances to 'think' using LLM: prepare context, send to LLM, receive action response",
+              "status": "pending",
+              "estimatedHours": 3
+            },
+            {
+              "id": "subtask-007-003",
+              "title": "Build action generation system",
+              "description": "Create system for instances to generate actions based on LLM thinking (parse LLM response into action format)",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-007-004",
+              "title": "Integrate activation with World Engine",
+              "description": "Connect instance activation system with World Engine to trigger after player actions",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-007-005",
+              "title": "Implement action processing",
+              "description": "Create system for World Engine to process instance actions and update game state",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-007-006",
+              "title": "Add activation logging",
+              "description": "Implement logging for instance activations, actions generated, and state changes for debugging",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        },
+        {
+          "id": "task-008",
+          "title": "Testing & Validation",
+          "description": "Create basic tests, validate system functionality, and ensure everything works together",
+          "status": "pending",
+          "priority": "high",
+          "estimatedHours": 10,
+          "complexity": "medium",
+          "dependencies": ["task-003", "task-007"],
+          "subtasks": [
+            {
+              "id": "subtask-008-001",
+              "title": "Set up testing framework",
+              "description": "Configure Jest or Mocha for backend testing and React Testing Library for frontend testing",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-008-002",
+              "title": "Write unit tests for World Engine",
+              "description": "Create tests for World Engine methods: action processing, state management, context building",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-008-003",
+              "title": "Write unit tests for Instance System",
+              "description": "Create tests for InstanceManager, instance activation, action generation",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-008-004",
+              "title": "Write integration tests",
+              "description": "Create tests for full workflows: player action → World Engine → instance activation → state update",
+              "status": "pending",
+              "estimatedHours": 2
+            },
+            {
+              "id": "subtask-008-005",
+              "title": "Manual testing and validation",
+              "description": "Perform manual testing: play through scenarios, test save/load, verify time advancement, check instance activation",
+              "status": "pending",
+              "estimatedHours": 1
+            },
+            {
+              "id": "subtask-008-006",
+              "title": "Fix bugs and issues",
+              "description": "Identify and fix any bugs, errors, or issues found during testing",
+              "status": "pending",
+              "estimatedHours": 1
+            }
+          ]
+        }
+      ],
+      "summary": {
+        "totalTasks": 8,
+        "totalSubtasks": 58,
+        "totalEstimatedHours": 110,
+        "criticalPath": ["task-001", "task-002", "task-003", "task-005", "task-006", "task-007"]
+      }
+    }
+  ]
+}

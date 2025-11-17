@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG AI System - Architecture Design Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        h4 {
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .component {
+            background: #e8f0fe;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .note {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: #0c5460;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .warning strong {
+            color: #856404;
+        }
+
+        .important {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .important strong {
+            color: #721c24;
+        }
+
+        .recommendation {
+            background: #cfe2ff;
+            border-left: 4px solid #0d6efd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .recommendation strong {
+            color: #084298;
+        }
+
+        .cost-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .cost-warning strong {
+            color: #856404;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border: 2px solid #667eea;
+        }
+
+        table thead tr {
+            background: #667eea;
+            color: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .flow-diagram {
+            text-align: center;
+            padding: 30px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #667eea;
+            margin: 15px 0;
+        }
+
+        .box {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin: 5px;
+            font-weight: bold;
+        }
+
+        .data-structure {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .toc {
+            background: #e8f0fe;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .toc li {
+            margin: 8px 0;
+        }
+
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 RPG AI System - Architecture Design Document</h1>
+        
+        <div class="section">
+            <h2>📋 Document Information</h2>
+            <ul>
+                <li><strong>Version:</strong> 1.0</li>
+                <li><strong>Date:</strong> 2024</li>
+                <li><strong>LLM Provider:</strong> Deepseek-V3.2 Exp (Thinking Mode)</li>
+                <li><strong>Architecture Type:</strong> LLM-Centric Text-Based RPG System</li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#overview">1. System Overview</a></li>
+                <li><a href="#architecture">2. System Architecture</a></li>
+                <li><a href="#components">3. Core Components</a></li>
+                <li><a href="#data-models">4. Data Models</a></li>
+                <li><a href="#workflows">5. System Workflows</a></li>
+                <li><a href="#memory">6. Memory Management</a></li>
+                <li><a href="#time">7. Time System</a></li>
+                <li><a href="#instances">8. Instance System</a></li>
+                <li><a href="#costs">9. Cost Analysis</a></li>
+                <li><a href="#implementation">10. Implementation Guidelines</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="overview">
+            <h2>1. System Overview</h2>
+            
+            <h3>1.1 Purpose</h3>
+            <p>
+                This document describes the architecture for a text-based RPG game system powered by Deepseek-V3.2 Exp (Thinking Mode). 
+                The system creates a dynamic, living world where multiple AI instances (NPCs, Factions, Cities) operate autonomously 
+                in the background, creating a complex and evolving game environment centered around player actions.
+            </p>
+
+            <h3>1.2 Design Principles</h3>
+            <ul>
+                <li><strong>LLM-Centric:</strong> The system relies primarily on LLM intelligence for decision-making. No complex rule systems are implemented initially - the LLM handles logic, consistency, and game mechanics.</li>
+                <li><strong>Player-Centric:</strong> All game time and events revolve around player actions. Time only advances when the player acts.</li>
+                <li><strong>Distributed Memory:</strong> Memory is distributed across components to optimize context usage and costs.</li>
+                <li><strong>Information Realism:</strong> Players only learn information through realistic means (witnessing events, rumors, direct interaction).</li>
+                <li><strong>Instance Autonomy:</strong> AI instances operate independently with their own goals, memories, and decision-making capabilities.</li>
+            </ul>
+
+            <h3>1.3 System Goals</h3>
+            <ul>
+                <li>Create a living, breathing world that evolves independently of player actions</li>
+                <li>Maintain consistency and immersion through intelligent LLM-based decision-making</li>
+                <li>Minimize costs through efficient context management and cache optimization</li>
+                <li>Enable complex world interactions while keeping the system maintainable</li>
+                <li>Support rollback functionality for player actions</li>
+            </ul>
+        </div>
+
+        <div class="section" id="architecture">
+            <h2>2. System Architecture</h2>
+
+            <h3>2.1 High-Level Architecture</h3>
+            <div class="flow-diagram">
+                <div class="box">Player</div>
+                <div class="arrow">↓</div>
+                <div class="box">World Engine<br/>(Core Processor)</div>
+                <div class="arrow">↓</div>
+                <div class="box">Deepseek-V3.2 Exp API</div>
+                <div class="arrow">↗</div>
+                <div class="box">Instance Manager<br/>(Orchestrator)</div>
+                <div class="arrow">↓</div>
+                <div class="box">AI Instances<br/>(NPCs, Factions, Cities)</div>
+                <div class="arrow">↗</div>
+                <div class="box">Deepseek-V3.2 Exp API</div>
+            </div>
+
+            <h3>2.2 Component Relationships</h3>
+            <ul>
+                <li><strong>Player ↔ World Engine:</strong> Direct interaction. Player sends actions, World Engine responds with narrative.</li>
+                <li><strong>World Engine ↔ LLM:</strong> World Engine uses LLM to process player actions, generate narratives, and maintain consistency.</li>
+                <li><strong>Instance Manager ↔ Instances:</strong> Instance Manager orchestrates instance activations and collects their actions.</li>
+                <li><strong>Instances ↔ LLM:</strong> Each instance uses LLM for "thinking" and decision-making.</li>
+                <li><strong>Instance Manager ↔ LLM:</strong> Instance Manager uses LLM to determine activation frequencies and resolve conflicts.</li>
+                <li><strong>World Engine ↔ Instance Manager:</strong> World Engine receives processed instance actions from Instance Manager.</li>
+            </ul>
+
+            <h3>2.3 Data Flow</h3>
+            <ol>
+                <li>Player action flows to World Engine</li>
+                <li>World Engine processes with LLM, updates game state</li>
+                <li>Time advances based on action type</li>
+                <li>Instance Manager checks which instances should activate (using LLM)</li>
+                <li>Selected instances "think" using LLM</li>
+                <li>Instances generate actions</li>
+                <li>Instance Manager processes actions, resolves conflicts (using LLM)</li>
+                <li>World Engine integrates instance actions into game state</li>
+                <li>Information propagates based on action visibility</li>
+            </ol>
+        </div>
+
+        <div class="section" id="components">
+            <h2>3. Core Components</h2>
+
+            <div class="component">
+                <h3>3.1 World Engine</h3>
+                <h4>Purpose</h4>
+                <p>The central processor of the game. Handles all player interactions, maintains game state consistency, and coordinates the overall game experience.</p>
+
+                <h4>Responsibilities</h4>
+                <ul>
+                    <li>Process player actions and generate narrative responses using LLM</li>
+                    <li>Maintain player-specific memory and context</li>
+                    <li>Query instance states when player interacts with them (lazy loading)</li>
+                    <li>Integrate instance actions into the game world</li>
+                    <li>Manage game state snapshots for rollback functionality</li>
+                    <li>Track game time and advance it based on player actions</li>
+                    <li>Ensure narrative consistency through LLM-based validation</li>
+                </ul>
+
+                <h4>LLM Usage</h4>
+                <ul>
+                    <li><strong>Player Action Processing:</strong> Every player action is processed through LLM with context including:
+                        <ul>
+                            <li>Last 20-30 player exchanges (rolling window)</li>
+                            <li>Player's current state (location, relationships, inventory, objectives)</li>
+                            <li>Player's known information (what they've learned/discovered)</li>
+                            <li>Recent world events the player is aware of</li>
+                            <li>Game rules and world consistency information</li>
+                        </ul>
+                    </li>
+                    <li><strong>Instance Action Integration:</strong> When processing instance actions, World Engine uses LLM to:
+                        <ul>
+                            <li>Determine how actions affect the world</li>
+                            <li>Generate narrative consequences</li>
+                            <li>Update game state consistently</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Memory Scope</h4>
+                <div class="note">
+                    <strong>World Engine Memory (What it remembers):</strong>
+                    <ul>
+                        <li>Player conversation history (last 20-30 exchanges)</li>
+                        <li>Player's current state (location, relationships, inventory, quests)</li>
+                        <li>Player's known information (discoveries, learned facts)</li>
+                        <li>Recent world events the player has witnessed or learned about</li>
+                        <li>Game rules, magic systems, world consistency rules</li>
+                    </ul>
+                    <strong>World Engine Memory (What it does NOT remember):</strong>
+                    <ul>
+                        <li>Events in locations player hasn't visited</li>
+                        <li>Secret plots player doesn't know about</li>
+                        <li>Internal thoughts/plans of instances</li>
+                        <li>Long-term history of distant locations</li>
+                    </ul>
+                    <strong>Query Pattern:</strong> World Engine uses lazy loading - it only queries instance memories when the player directly interacts with that instance or location.
+                </div>
+            </div>
+
+            <div class="component">
+                <h3>3.2 Instance Manager</h3>
+                <h4>Purpose</h4>
+                <p>Orchestrates background AI instances, manages their activation cycles, and processes their actions.</p>
+
+                <h4>Responsibilities</h4>
+                <ul>
+                    <li>Determine which instances should activate based on context (using LLM)</li>
+                    <li>Manage instance activation frequencies</li>
+                    <li>Collect actions from activated instances</li>
+                    <li>Detect and resolve action conflicts (using LLM)</li>
+                    <li>Modify conflicting actions when necessary (using LLM)</li>
+                    <li>Coordinate information propagation between instances</li>
+                    <li>Track instance states and activation history</li>
+                </ul>
+
+                <h4>LLM Usage</h4>
+                <ul>
+                    <li><strong>Activation Decision:</strong> Instance Manager uses LLM to determine which instances should activate. The LLM considers:
+                        <ul>
+                            <li>Time since last activation for each instance</li>
+                            <li>Player's current location and proximity to instances</li>
+                            <li>Recent significant events</li>
+                            <li>Instance priorities and relevance</li>
+                            <li>Direct interaction flags (player recently talked to an NPC)</li>
+                        </ul>
+                        <div class="important">
+                            <strong>Activation Frequency:</strong> The minimum time between activations is 7 in-game days, but this is the WORST CASE scenario. 
+                            Instances near the player or directly interacting with the player will activate much more frequently. 
+                            The LLM determines the optimal activation frequency based on context.
+                        </div>
+                    </li>
+                    <li><strong>Conflict Resolution:</strong> When multiple instances generate conflicting actions, Instance Manager uses LLM to:
+                        <ul>
+                            <li>Detect conflicts between actions</li>
+                            <li>Understand the nature and severity of conflicts</li>
+                            <li>Modify lower-priority actions to resolve conflicts</li>
+                            <li>Determine action priorities based on instance types, relationships, and context</li>
+                        </ul>
+                        <div class="important">
+                            <strong>Action Modification:</strong> Instance Manager modifies conflicting actions using LLM intelligence. 
+                            Instances themselves do NOT modify their own actions - this is handled centrally by Instance Manager.
+                        </div>
+                    </li>
+                    <li><strong>Information Propagation:</strong> Instance Manager uses LLM to determine:
+                        <ul>
+                            <li>Which instances should know about specific events</li>
+                            <li>How information spreads (public events vs. secrets)</li>
+                            <li>Information propagation speed and channels</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="component">
+                <h3>3.3 AI Instances</h3>
+                <h4>Purpose</h4>
+                <p>Autonomous entities with goals that act independently in the game world. Each instance represents an important NPC, Faction, or City/Location.</p>
+
+                <h4>Instance Types</h4>
+                <ul>
+                    <li><strong>NPCs:</strong> Important characters with personal goals (1 main goal + 2 sub-goals)</li>
+                    <li><strong>Factions:</strong> Groups/organizations with collective objectives</li>
+                    <li><strong>Cities/Locations:</strong> Places that evolve over time with generic goals (economy, defense) plus specific goals</li>
+                </ul>
+
+                <h4>Instance Properties</h4>
+                <ul>
+                    <li><strong>Identity:</strong> Name, type, description, role in the world</li>
+                    <li><strong>Goals:</strong> Dynamic goals that evolve based on events and time</li>
+                    <li><strong>Memory:</strong> Instance-specific context and history</li>
+                    <li><strong>State:</strong> Current status, relationships, resources</li>
+                    <li><strong>Location:</strong> Current position in the world</li>
+                    <li><strong>Last Activation:</strong> Timestamp of last thinking cycle</li>
+                </ul>
+
+                <h4>LLM Usage</h4>
+                <ul>
+                    <li><strong>Thinking Cycle:</strong> When activated, each instance uses LLM to:
+                        <ul>
+                            <li>Review its goals and current state</li>
+                            <li>Consider recent events and changes in the world</li>
+                            <li>Evaluate its memory and relationships</li>
+                            <li>Generate appropriate actions based on its goals and context</li>
+                        </ul>
+                    </li>
+                    <li><strong>Goal Evolution:</strong> Instance goals evolve dynamically using LLM:
+                        <ul>
+                            <li>Goals change based on major events</li>
+                            <li>Goals adapt to player actions affecting the instance</li>
+                            <li>Goals progress naturally over time</li>
+                            <li>New goals may emerge, old goals may be completed or abandoned</li>
+                        </ul>
+                    </li>
+                    <li><strong>Context Understanding:</strong> Each instance receives context including:
+                        <ul>
+                            <li>World context (shared world information)</li>
+                            <li>Instance-specific memory (its own history and events)</li>
+                            <li>Current goals and their progress</li>
+                            <li>Known information (what this instance knows about the world)</li>
+                            <li>System instructions (understanding it exists in a world managed by World Engine)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="note">
+                    <strong>Instance Communication:</strong> Instances cannot communicate directly with each other. 
+                    All interactions must go through World Engine, following realistic rules. 
+                    Each instance understands that it exists in a world managed by World Engine and must follow RP rules.
+                </div>
+            </div>
+
+            <div class="component">
+                <h3>3.4 Information Propagation System</h3>
+                <h4>Purpose</h4>
+                <p>Manages how information spreads through the world, ensuring players only learn information through realistic means.</p>
+
+                <h4>Information Types</h4>
+                <ul>
+                    <li><strong>Public Events:</strong> Information that spreads quickly (e.g., king's death, major battles)</li>
+                    <li><strong>Secrets:</strong> Information that remains hidden unless leaked (e.g., assassination plots)</li>
+                    <li><strong>Rumors:</strong> Information that spreads but may be inaccurate or incomplete</li>
+                </ul>
+
+                <h4>LLM Usage</h4>
+                <ul>
+                    <li>Instance Manager uses LLM to determine:
+                        <ul>
+                            <li>Which instances should know about specific events</li>
+                            <li>How fast information spreads based on event type</li>
+                            <li>Information accuracy and completeness for each instance</li>
+                            <li>Whether information should be public, secret, or rumor</li>
+                        </ul>
+                    </li>
+                    <li>World Engine uses LLM to determine:
+                        <ul>
+                            <li>When and how player learns information</li>
+                            <li>Information accuracy from player's perspective</li>
+                            <li>Whether player would realistically know something</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section" id="data-models">
+            <h2>4. Data Models</h2>
+
+            <h3>4.1 Instance Data Structure</h3>
+            <div class="data-structure">
+{
+  "id": "string (unique identifier)",
+  "type": "NPC | Faction | City",
+  "name": "string",
+  "description": "string (who/what this instance is)",
+  "location": "string (current location in world)",
+  "goals": [
+    {
+      "id": "string",
+      "type": "main | sub | generic | specific",
+      "description": "string (goal description)",
+      "progress": "number (0-100)",
+      "lastUpdated": "timestamp",
+      "status": "active | completed | abandoned"
+    }
+  ],
+  "memory": [
+    {
+      "timestamp": "timestamp",
+      "event": "string (what happened)",
+      "relevance": "high | medium | low",
+      "type": "action | observation | interaction"
+    }
+  ],
+  "state": {
+    "relationships": {},
+    "resources": {},
+    "status": "string",
+    "knownInformation": []
+  },
+  "lastActivation": "timestamp (in-game time)",
+  "activationCount": "number",
+  "metadata": {
+    "created": "timestamp",
+    "priority": "number (for conflict resolution)"
+  }
+}
+            </div>
+
+            <h3>4.2 Action Data Structure</h3>
+            <div class="data-structure">
+{
+  "id": "string (unique identifier)",
+  "instanceId": "string (which instance generated this)",
+  "timestamp": "timestamp (in-game time)",
+  "actionType": "string (e.g., 'move', 'communicate', 'trade', 'attack', 'plan')",
+  "description": "string (what the instance wants to do)",
+  "target": "string | null (target instance or location)",
+  "priority": "number (for conflict resolution)",
+  "status": "pending | processed | conflicted | modified | failed",
+  "conflictResolution": {
+    "conflictedWith": ["actionId"],
+    "modifiedBy": "InstanceManager",
+    "modification": "string (how it was modified)",
+    "reason": "string"
+  },
+  "visibility": "public | secret | rumor",
+  "metadata": {}
+}
+            </div>
+
+            <h3>4.3 Game State Data Structure</h3>
+            <div class="data-structure">
+{
+  "gameTime": {
+    "day": "number",
+    "timeOfDay": "string (e.g., 'morning', 'afternoon', 'evening', 'night')",
+    "totalDays": "number"
+  },
+  "player": {
+    "location": "string",
+    "inventory": [],
+    "relationships": {},
+    "knownInformation": [],
+    "objectives": [],
+    "conversationHistory": [
+      {
+        "timestamp": "timestamp",
+        "playerInput": "string",
+        "worldResponse": "string"
+      }
+    ]
+  },
+  "instances": {
+    "instanceId": { /* Instance data */ }
+  },
+  "worldEvents": [
+    {
+      "id": "string",
+      "timestamp": "timestamp",
+      "type": "string",
+      "description": "string",
+      "visibility": "public | secret | rumor",
+      "knownBy": ["instanceId"]
+    }
+  ],
+  "informationGraph": {
+    "informationId": {
+      "content": "string",
+      "type": "public | secret | rumor",
+      "knownBy": ["instanceId"],
+      "spreadSpeed": "number"
+    }
+  },
+  "snapshots": [
+    {
+      "id": "string",
+      "timestamp": "timestamp",
+      "state": { /* Full game state */ }
+    }
+  ]
+}
+            </div>
+
+            <h3>4.4 World Context Data Structure</h3>
+            <div class="data-structure">
+{
+  "worldName": "string",
+  "description": "string (world overview)",
+  "locations": [
+    {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "type": "city | town | dungeon | wilderness",
+      "connections": ["locationId"]
+    }
+  ],
+  "factions": [
+    {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "relationships": {}
+    }
+  ],
+  "importantNPCs": [
+    {
+      "id": "string",
+      "name": "string",
+      "description": "string",
+      "role": "string"
+    }
+  ],
+  "worldRules": {
+    "magicSystem": "string",
+    "technologyLevel": "string",
+    "socialStructure": "string",
+    "customRules": []
+  },
+  "history": "string (world history and background)"
+}
+            </div>
+        </div>
+
+        <div class="section" id="workflows">
+            <h2>5. System Workflows</h2>
+
+            <h3>5.1 Player Action Workflow</h3>
+            <ol>
+                <li><strong>Player sends action</strong> to World Engine</li>
+                <li><strong>World Engine creates state snapshot</strong> (for rollback capability)</li>
+                <li><strong>World Engine calculates time advancement</strong> based on action type:
+                    <ul>
+                        <li>Conversation: minutes to hours</li>
+                        <li>Travel: hours to days</li>
+                        <li>Combat: minutes</li>
+                        <li>Rest: hours</li>
+                    </ul>
+                </li>
+                <li><strong>World Engine queries relevant instances</strong> (lazy loading):
+                    <ul>
+                        <li>If player is in a location, query that location's instance</li>
+                        <li>If player interacts with NPC, query that NPC instance</li>
+                        <li>Only query what's needed for current interaction</li>
+                    </ul>
+                </li>
+                <li><strong>World Engine sends to LLM</strong> with context:
+                    <ul>
+                        <li>Player conversation history (last 20-30 exchanges)</li>
+                        <li>Player's current state</li>
+                        <li>Player's known information</li>
+                        <li>Relevant instance states (if queried)</li>
+                        <li>Current game time</li>
+                        <li>World rules and consistency information</li>
+                    </ul>
+                </li>
+                <li><strong>LLM generates narrative response</strong></li>
+                <li><strong>World Engine updates game state</strong></li>
+                <li><strong>World Engine saves updated state</strong></li>
+                <li><strong>Response sent to player</strong></li>
+                <li><strong>Instance activation check triggered</strong> (see 5.2)</li>
+            </ol>
+
+            <h3>5.2 Instance Activation Workflow</h3>
+            <ol>
+                <li><strong>After player action, Instance Manager is triggered</strong></li>
+                <li><strong>Instance Manager sends context to LLM</strong> to determine which instances should activate:
+                    <ul>
+                        <li>Current game time</li>
+                        <li>Player's location</li>
+                        <li>All instances with their last activation times</li>
+                        <li>Recent significant events</li>
+                        <li>Instance priorities and types</li>
+                    </ul>
+                </li>
+                <li><strong>LLM returns list of instances to activate</strong> with reasoning</li>
+                <li><strong>For each instance to activate:</strong>
+                    <ul>
+                        <li>Instance Manager retrieves instance memory and state</li>
+                        <li>Instance context is prepared (goals, memory, world context)</li>
+                        <li>Instance "thinking" prompt is sent to LLM</li>
+                        <li>LLM generates action(s) for the instance</li>
+                        <li>Action is added to action queue</li>
+                    </ul>
+                </li>
+                <li><strong>Instance Manager processes action queue</strong> (see 5.3)</li>
+            </ol>
+
+            <div class="important">
+                <strong>Activation Frequency Logic:</strong>
+                <p>The LLM determines activation frequency based on context. The 7-day minimum is the WORST CASE scenario for instances 
+                that are completely irrelevant and far from the player. In practice:</p>
+                <ul>
+                    <li>Instances in the same location as player: Activate every 1-2 days</li>
+                    <li>Instances in nearby locations: Activate every 3-5 days</li>
+                    <li>Instances far from player: Activate every 7+ days (minimum)</li>
+                    <li>Instances player directly interacted with: Activate on next time passage</li>
+                    <li>Instances affected by significant events: Activate immediately</li>
+                </ul>
+            </div>
+
+            <h3>5.3 Action Processing and Conflict Resolution Workflow</h3>
+            <ol>
+                <li><strong>Instance Manager collects all actions</strong> from activated instances</li>
+                <li><strong>Instance Manager sends actions to LLM</strong> for conflict detection:
+                    <ul>
+                        <li>All pending actions</li>
+                        <li>Instance priorities and relationships</li>
+                        <li>Action types and targets</li>
+                        <li>Current world state</li>
+                    </ul>
+                </li>
+                <li><strong>LLM identifies conflicts</strong> and returns conflict analysis</li>
+                <li><strong>For each conflict, Instance Manager uses LLM</strong> to:
+                    <ul>
+                        <li>Understand conflict nature and severity</li>
+                        <li>Determine which action has priority</li>
+                        <li>Modify lower-priority action to resolve conflict</li>
+                        <li>Generate modified action description</li>
+                    </ul>
+                </li>
+                <li><strong>Instance Manager updates actions</strong> with modifications</li>
+                <li><strong>Instance Manager sends processed actions to World Engine</strong></li>
+                <li><strong>World Engine integrates actions</strong> into game state (see 5.4)</li>
+            </ol>
+
+            <div class="important">
+                <strong>Action Modification:</strong> Instance Manager modifies conflicting actions using LLM intelligence. 
+                The original instance is NOT asked to modify its action - Instance Manager handles this centrally to ensure 
+                consistency and prevent infinite modification loops.
+            </div>
+
+            <h3>5.4 World Engine Action Integration Workflow</h3>
+            <ol>
+                <li><strong>World Engine receives processed actions</strong> from Instance Manager</li>
+                <li><strong>World Engine sends actions to LLM</strong> with context:
+                    <ul>
+                        <li>All instance actions</li>
+                        <li>Current world state</li>
+                        <li>Player's known information</li>
+                        <li>World rules and consistency</li>
+                    </ul>
+                </li>
+                <li><strong>LLM determines consequences</strong> of actions:
+                    <ul>
+                        <li>How actions affect the world</li>
+                        <li>What changes occur</li>
+                        <li>What information becomes available</li>
+                    </ul>
+                </li>
+                <li><strong>World Engine updates game state</strong> based on LLM response</li>
+                <li><strong>Information propagation triggered</strong> (see 5.5)</li>
+                <li><strong>Instance memories updated</strong> with new events</li>
+            </ol>
+
+            <h3>5.5 Information Propagation Workflow</h3>
+            <ol>
+                <li><strong>After actions are processed, Instance Manager triggers information propagation</strong></li>
+                <li><strong>Instance Manager sends to LLM:</strong>
+                    <ul>
+                        <li>New events/actions that occurred</li>
+                        <li>Action visibility (public/secret/rumor)</li>
+                        <li>All instances and their relationships</li>
+                        <li>Information graph current state</li>
+                    </ul>
+                </li>
+                <li><strong>LLM determines information spread:</strong>
+                    <ul>
+                        <li>Which instances should know about each event</li>
+                        <li>How fast information spreads</li>
+                        <li>Information accuracy for each instance</li>
+                        <li>Whether information should be public, secret, or rumor</li>
+                    </ul>
+                </li>
+                <li><strong>Instance Manager updates information graph</strong></li>
+                <li><strong>Instance memories updated</strong> with new information (if they should know it)</li>
+                <li><strong>World Engine updates player's known information</strong> (if player would realistically know)</li>
+            </ol>
+
+            <h3>5.6 Time Skip Workflow</h3>
+            <ol>
+                <li><strong>Player requests time skip</strong> (e.g., "skip 7 days")</li>
+                <li><strong>World Engine validates time skip</strong> (maximum limit, confirmation for large skips)</li>
+                <li><strong>Game time advances</strong> by requested amount</li>
+                <li><strong>Instance Manager determines which instances should activate</strong> during the skip period (using LLM)</li>
+                <li><strong>For each time period in the skip:</strong>
+                    <ul>
+                        <li>Instance Manager activates relevant instances</li>
+                        <li>Instances "think" and generate actions</li>
+                        <li>Actions are processed and conflicts resolved</li>
+                        <li>World state is updated</li>
+                    </ul>
+                </li>
+                <li><strong>Instance Manager generates summary</strong> of what happened during skip (using LLM)</li>
+                <li><strong>World Engine presents summary to player</strong></li>
+                <li><strong>Player can explore details</strong> of specific events (lazy loading)</li>
+            </ol>
+
+            <div class="warning">
+                <strong>Time Skip Cost Consideration:</strong> Time skips can be expensive as they may activate many instances. 
+                Consider batching activations and using summary approaches to control costs.
+            </div>
+        </div>
+
+        <div class="section" id="memory">
+            <h2>6. Memory Management</h2>
+
+            <h3>6.1 Memory Architecture</h3>
+            <p>The system uses a distributed memory architecture to optimize context usage and costs:</p>
+            <ul>
+                <li><strong>World Engine Memory:</strong> Player-focused, limited scope</li>
+                <li><strong>Instance Memory:</strong> Instance-specific, comprehensive for that instance</li>
+                <li><strong>World Context:</strong> Shared, static world information</li>
+            </ul>
+
+            <h3>6.2 World Engine Memory</h3>
+            <h4>What World Engine Remembers</h4>
+            <ul>
+                <li><strong>Player Conversation History:</strong> Last 20-30 exchanges (rolling window)</li>
+                <li><strong>Player State:</strong> Current location, relationships, inventory, objectives</li>
+                <li><strong>Player's Known Information:</strong> What the player has discovered/learned</li>
+                <li><strong>Recent Player-Aware Events:</strong> Only events the player has witnessed or learned about</li>
+                <li><strong>Game Rules:</strong> World rules, magic systems, consistency rules</li>
+            </ul>
+
+            <h4>What World Engine Does NOT Remember</h4>
+            <ul>
+                <li>Events in locations player hasn't visited</li>
+                <li>Secret plots player doesn't know about</li>
+                <li>Internal thoughts/plans of instances</li>
+                <li>Long-term history of distant locations</li>
+            </ul>
+
+            <h4>Lazy Loading Pattern</h4>
+            <p>World Engine only queries instance memories when needed:</p>
+            <ul>
+                <li>When player enters a location: Query that location's instance</li>
+                <li>When player interacts with NPC: Query that NPC instance</li>
+                <li>When player asks about something: Query relevant instances</li>
+            </ul>
+
+            <h3>6.3 Instance Memory</h3>
+            <h4>Memory Structure</h4>
+            <ul>
+                <li><strong>Event Memory:</strong> Chronological list of events the instance witnessed or was involved in</li>
+                <li><strong>Relationship Memory:</strong> Information about relationships with other instances</li>
+                <li><strong>Goal Progress:</strong> History of goal changes and progress</li>
+                <li><strong>Known Information:</strong> What this instance knows about the world</li>
+            </ul>
+
+            <h4>Memory Compression</h4>
+            <div class="recommendation">
+                <strong>Memory Optimization Strategy:</strong>
+                <ul>
+                    <li>Keep detailed memories for recent events (last 7-14 days)</li>
+                    <li>Summarize older events (older than 14 days) using LLM</li>
+                    <li>Compress very old memories (older than 30 days) into high-level summaries</li>
+                    <li>This reduces token usage while maintaining context</li>
+                </ul>
+            </div>
+
+            <h3>6.4 Memory Persistence</h3>
+            <ul>
+                <li><strong>State Snapshots:</strong> Complete game state saved after each player action</li>
+                <li><strong>Instance Memories:</strong> Stored separately (one file per instance or consolidated file)</li>
+                <li><strong>Storage Format:</strong> JSON files (human-readable, easy to debug)</li>
+                <li><strong>Incremental Saves:</strong> Only save changed data to reduce I/O</li>
+                <li><strong>Rollback Support:</strong> Snapshots enable rolling back to previous states</li>
+            </ul>
+        </div>
+
+        <div class="section" id="time">
+            <h2>7. Time System</h2>
+
+            <h3>7.1 Time Model</h3>
+            <p>The game uses a player-centric time system where time only advances when the player acts.</p>
+
+            <h4>Time Representation</h4>
+            <ul>
+                <li><strong>Format:</strong> "Day X - Time of Day" (displayed at top of each prompt)</li>
+                <li><strong>Time of Day:</strong> Morning, Afternoon, Evening, Night</li>
+                <li><strong>Day Counter:</strong> Tracks total days since game start</li>
+            </ul>
+
+            <h3>7.2 Time Advancement</h3>
+            <h4>Action-Based Time Costs</h4>
+            <ul>
+                <li><strong>Conversation:</strong> 5-30 minutes per exchange (longer conversations advance more time)</li>
+                <li><strong>Travel:</strong> Hours to days depending on distance</li>
+                <li><strong>Combat:</strong> Minutes to hours</li>
+                <li><strong>Rest:</strong> Hours (sleep = 8 hours)</li>
+                <li><strong>Exploration:</strong> 30 minutes to 2 hours</li>
+            </ul>
+
+            <h4>Time Calculation</h4>
+            <p>World Engine uses LLM to determine appropriate time advancement based on:</p>
+            <ul>
+                <li>Action type</li>
+                <li>Action complexity</li>
+                <li>Context and circumstances</li>
+                <li>Realistic time requirements</li>
+            </ul>
+
+            <h3>7.3 Time Skip</h3>
+            <h4>Player-Initiated Time Skip</h4>
+            <p>Players can request time skips (e.g., "skip 7 days", "wait until evening").</p>
+
+            <h4>Time Skip Process</h4>
+            <ol>
+                <li>Player requests time skip</li>
+                <li>World Engine validates (maximum limit, confirmation for large skips)</li>
+                <li>Game time advances</li>
+                <li>Instance Manager activates relevant instances for the skip period</li>
+                <li>Instances generate actions for the skipped time</li>
+                <li>Actions are processed</li>
+                <li>Summary is generated and presented to player</li>
+            </ol>
+
+            <h4>Time Skip Limits</h4>
+            <ul>
+                <li><strong>Maximum Skip:</strong> 30 days (configurable)</li>
+                <li><strong>Confirmation Required:</strong> For skips >7 days</li>
+                <li><strong>Cost Control:</strong> Only activate instances that would have done something significant</li>
+            </ul>
+        </div>
+
+        <div class="section" id="instances">
+            <h2>8. Instance System</h2>
+
+            <h3>8.1 Instance Lifecycle</h3>
+            <h4>Initialization</h4>
+            <ul>
+                <li>Instances are created during world generation</li>
+                <li>Each instance receives initial goals, state, and context</li>
+                <li>Instances are static (no dynamic creation initially)</li>
+            </ul>
+
+            <h4>Activation</h4>
+            <ul>
+                <li>Instances activate based on Instance Manager decisions (using LLM)</li>
+                <li>Activation frequency determined by context and proximity to player</li>
+                <li>Minimum activation interval: 7 in-game days (worst case)</li>
+            </ul>
+
+            <h4>Thinking Cycle</h4>
+            <ol>
+                <li>Instance Manager prepares instance context</li>
+                <li>Context sent to LLM with instance thinking prompt</li>
+                <li>LLM generates action(s) based on goals and context</li>
+                <li>Action added to action queue</li>
+            </ol>
+
+            <h3>8.2 Goal System</h3>
+            <h4>Goal Types</h4>
+            <ul>
+                <li><strong>NPC Goals:</strong> 1 main goal + 2 sub-goals</li>
+                <li><strong>City Goals:</strong> Generic goals (economy, defense) + specific goals (can contradict generic goals due to corruption, etc.)</li>
+                <li><strong>Faction Goals:</strong> Collective objectives</li>
+            </ul>
+
+            <h4>Goal Evolution</h4>
+            <p>Goals evolve dynamically using LLM:</p>
+            <ul>
+                <li>Goals change based on major events</li>
+                <li>Goals adapt to player actions</li>
+                <li>Goals progress naturally over time</li>
+                <li>New goals emerge, old goals complete or are abandoned</li>
+            </ul>
+
+            <h4>Goal Evolution Triggers</h4>
+            <ul>
+                <li>Major world events affecting the instance</li>
+                <li>Significant time passage</li>
+                <li>Player actions directly affecting the instance</li>
+                <li>Goal completion or failure</li>
+            </ul>
+
+            <h3>8.3 Instance Interaction</h3>
+            <h4>Interaction Rules</h4>
+            <ul>
+                <li>Instances cannot communicate directly with each other</li>
+                <li>All interactions go through World Engine</li>
+                <li>Interactions follow realistic RP rules</li>
+                <li>Instances understand they exist in a world managed by World Engine</li>
+            </ul>
+
+            <h4>Interaction Types</h4>
+            <ul>
+                <li><strong>Communication:</strong> Messages, meetings, negotiations</li>
+                <li><strong>Trade:</strong> Resource exchanges</li>
+                <li><strong>Conflict:</strong> Wars, disputes, competition</li>
+                <li><strong>Cooperation:</strong> Alliances, joint projects</li>
+            </ul>
+        </div>
+
+        <div class="section" id="costs">
+            <h2>9. Cost Analysis</h2>
+
+            <h3>9.1 Deepseek-V3.2 Exp Pricing</h3>
+            <ul>
+                <li><strong>Input tokens (cache hit):</strong> $0.028 per 1M tokens</li>
+                <li><strong>Input tokens (cache miss):</strong> $0.28 per 1M tokens</li>
+                <li><strong>Output tokens:</strong> $0.42 per 1M tokens</li>
+            </ul>
+
+            <div class="important">
+                <strong>Cache Optimization is CRITICAL:</strong> Cache hits reduce costs by ~65%! 
+                Reusing world context, instance templates, and standardized prompts dramatically reduces costs.
+            </div>
+
+            <h3>9.2 Token Usage Estimates</h3>
+            <ul>
+                <li><strong>World Engine (player action):</strong> ~2000 input tokens, ~500 output tokens</li>
+                <li><strong>World Engine (process instance actions):</strong> ~1500 input tokens, ~300 output tokens</li>
+                <li><strong>Instance thinking (per instance):</strong> ~1500 input tokens, ~400 output tokens</li>
+                <li><strong>Instance Manager (activation decision):</strong> ~2000 input tokens, ~300 output tokens</li>
+                <li><strong>Instance Manager (conflict resolution):</strong> ~1500 input tokens, ~400 output tokens</li>
+            </ul>
+
+            <h3>9.3 Cost Per Single Player Action</h3>
+            <p>Assuming instances activate once per day and player makes 50 actions per day:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instances Activated</th>
+                        <th>Cache Miss (Worst Case)</th>
+                        <th>Cache Hit (Best Case)</th>
+                        <th>Mixed (Realistic)*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>5 instances</strong></td>
+                        <td>$0.004256</td>
+                        <td>$0.001484</td>
+                        <td>$0.002870</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 instances</strong></td>
+                        <td>$0.007196</td>
+                        <td>$0.002534</td>
+                        <td>$0.004865</td>
+                    </tr>
+                    <tr>
+                        <td><strong>20 instances</strong></td>
+                        <td>$0.013076</td>
+                        <td>$0.004634</td>
+                        <td>$0.008855</td>
+                    </tr>
+                    <tr>
+                        <td><strong>50 instances</strong></td>
+                        <td>$0.030716</td>
+                        <td>$0.010934</td>
+                        <td>$0.020825</td>
+                    </tr>
+                    <tr>
+                        <td><strong>100 instances</strong></td>
+                        <td>$0.060116</td>
+                        <td>$0.021434</td>
+                        <td>$0.040775</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">* Mixed scenario assumes 30% cache hit rate</p>
+
+            <h3>9.4 Daily Cost (50 Player Actions, Instances Activate Once Per Day)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instances Activated</th>
+                        <th>Daily Cost (Cache Miss)</th>
+                        <th>Daily Cost (Cache Hit)</th>
+                        <th>Daily Cost (Mixed)*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>5 instances</strong></td>
+                        <td>$0.0420</td>
+                        <td>$0.0145</td>
+                        <td>$0.0337</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 instances</strong></td>
+                        <td>$0.0449</td>
+                        <td>$0.0156</td>
+                        <td>$0.0361</td>
+                    </tr>
+                    <tr>
+                        <td><strong>20 instances</strong></td>
+                        <td>$0.0508</td>
+                        <td>$0.0177</td>
+                        <td>$0.0409</td>
+                    </tr>
+                    <tr>
+                        <td><strong>50 instances</strong></td>
+                        <td>$0.0684</td>
+                        <td>$0.0240</td>
+                        <td>$0.0551</td>
+                    </tr>
+                    <tr>
+                        <td><strong>100 instances</strong></td>
+                        <td>$0.0978</td>
+                        <td>$0.0345</td>
+                        <td>$0.0788</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>9.5 Monthly Cost Estimates (30 Days, 50 Actions/Day)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instances Activated</th>
+                        <th>Monthly (Cache Miss)</th>
+                        <th>Monthly (Cache Hit)</th>
+                        <th>Monthly (Mixed)*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>5 instances</strong></td>
+                        <td>$1.26</td>
+                        <td>$0.44</td>
+                        <td>$1.01</td>
+                    </tr>
+                    <tr>
+                        <td><strong>10 instances</strong></td>
+                        <td>$1.35</td>
+                        <td>$0.47</td>
+                        <td>$1.08</td>
+                    </tr>
+                    <tr>
+                        <td><strong>20 instances</strong></td>
+                        <td>$1.52</td>
+                        <td>$0.53</td>
+                        <td>$1.23</td>
+                    </tr>
+                    <tr>
+                        <td><strong>50 instances</strong></td>
+                        <td>$2.05</td>
+                        <td>$0.72</td>
+                        <td>$1.65</td>
+                    </tr>
+                    <tr>
+                        <td><strong>100 instances</strong></td>
+                        <td>$2.93</td>
+                        <td>$1.04</td>
+                        <td>$2.36</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="cost-warning">
+                <strong>💡 Key Insights:</strong>
+                <ul>
+                    <li><strong>Cache optimization is CRITICAL:</strong> Cache hits reduce costs by ~65%!</li>
+                    <li><strong>Even with 100 instances:</strong> Monthly cost is only $2.36 (realistic mixed scenario) - EXTREMELY affordable!</li>
+                    <li><strong>Cost scales very slowly:</strong> Each additional instance adds only ~$0.01-0.02 per month</li>
+                    <li><strong>Regular actions are very cheap:</strong> Actions without instance activation cost only ~$0.00077 (cache miss) or ~$0.00027 (cache hit)</li>
+                </ul>
+            </div>
+
+            <h3>9.6 Cost Optimization Strategies</h3>
+            <ol>
+                <li><strong>MAXIMIZE CACHE HITS:</strong> Reuse world context, instance templates, and standardized prompts</li>
+                <li><strong>Context Compression:</strong> Summarize instance memories to reduce token count</li>
+                <li><strong>Smart Activation:</strong> Only activate instances that have meaningful changes</li>
+                <li><strong>Template Standardization:</strong> Use standardized prompts to maximize cache reuse</li>
+                <li><strong>Batch Processing:</strong> Process instances in batches to optimize API usage</li>
+            </ol>
+
+            <h3>9.7 Budget Controls</h3>
+            <ul>
+                <li><strong>Hard Limits:</strong> Maximum tokens per session (e.g., 1M tokens = ~$0.28-0.42)</li>
+                <li><strong>Daily Budget:</strong> Set daily spending limit (e.g., $0.50/day)</li>
+                <li><strong>Soft Limits:</strong> Warnings at 50%, 75%, 90% of budget</li>
+                <li><strong>Time Skip Limits:</strong> Maximum 30 days per skip, confirmation for skips >7 days</li>
+                <li><strong>Instance Activation Limits:</strong> Maximum instances activated per cycle (e.g., 50 max)</li>
+                <li><strong>Cache Monitoring:</strong> Track cache hit rate - aim for >40%</li>
+            </ul>
+        </div>
+
+        <div class="section" id="implementation">
+            <h2>10. Implementation Guidelines</h2>
+
+            <h3>10.1 Technology Stack</h3>
+            <ul>
+                <li><strong>Frontend:</strong> HTML/CSS/JavaScript (single-page application)</li>
+                <li><strong>Backend:</strong> Node.js with Express (or Python with FastAPI)</li>
+                <li><strong>LLM API:</strong> Deepseek-V3.2 Exp (Thinking Mode)</li>
+                <li><strong>Storage:</strong> JSON files for persistence (SQLite optional for complex queries)</li>
+                <li><strong>Architecture:</strong> Event-driven with async processing</li>
+            </ul>
+
+            <h3>10.2 Implementation Phases</h3>
+            <h4>Phase 1: Core MVP (Week 1-2)</h4>
+            <ul>
+                <li>World Engine with basic LLM integration</li>
+                <li>Player interaction system</li>
+                <li>Basic time tracking</li>
+                <li>Simple state saving (JSON files)</li>
+                <li>2-3 test instances (1 NPC, 1 City)</li>
+                <li>Basic instance activation (time-based only)</li>
+            </ul>
+
+            <h4>Phase 2: Instance System (Week 3-4)</h4>
+            <ul>
+                <li>Full instance system with goals</li>
+                <li>Instance Manager with LLM-based activation decisions</li>
+                <li>Action system and LLM-based conflict resolution</li>
+                <li>Information propagation (LLM-based)</li>
+                <li>Rollback system</li>
+            </ul>
+
+            <h4>Phase 3: Optimization (Week 5-6)</h4>
+            <ul>
+                <li>Context compression</li>
+                <li>Smart activation (skip irrelevant instances)</li>
+                <li>Cost tracking and limits</li>
+                <li>Batch processing</li>
+                <li>Time skip optimization</li>
+                <li>Cache optimization</li>
+            </ul>
+
+            <h4>Phase 4: Polish (Week 7+)</h4>
+            <ul>
+                <li>Advanced information propagation</li>
+                <li>Dynamic goal evolution</li>
+                <li>UI improvements</li>
+                <li>Performance optimization</li>
+                <li>Advanced features</li>
+            </ul>
+
+            <h3>10.3 Key Implementation Considerations</h3>
+            <h4>LLM Prompt Design</h4>
+            <ul>
+                <li>Use standardized prompt templates to maximize cache hits</li>
+                <li>Structure prompts consistently across similar operations</li>
+                <li>Include clear instructions and context boundaries</li>
+                <li>Specify output format (JSON when possible)</li>
+            </ul>
+
+            <h4>Error Handling</h4>
+            <ul>
+                <li>Handle API failures gracefully</li>
+                <li>Implement retry logic with exponential backoff</li>
+                <li>Log errors for debugging</li>
+                <li>Provide fallback responses when LLM fails</li>
+            </ul>
+
+            <h4>State Management</h4>
+            <ul>
+                <li>Save state after each player action</li>
+                <li>Implement incremental saves to reduce I/O</li>
+                <li>Maintain action logs for rollback</li>
+                <li>Version state snapshots</li>
+            </ul>
+
+            <h4>Performance</h4>
+            <ul>
+                <li>Process instances in parallel (with rate limiting)</li>
+                <li>Batch API calls when possible</li>
+                <li>Cache LLM responses for similar queries</li>
+                <li>Optimize context size through compression</li>
+            </ul>
+
+            <h3>10.4 Testing Strategy</h3>
+            <ul>
+                <li><strong>Unit Tests:</strong> Test individual components (World Engine, Instance Manager, etc.)</li>
+                <li><strong>Integration Tests:</strong> Test component interactions</li>
+                <li><strong>Cost Tests:</strong> Monitor token usage and costs</li>
+                <li><strong>Consistency Tests:</strong> Verify world state consistency</li>
+                <li><strong>Rollback Tests:</strong> Verify state restoration works correctly</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>11. Conclusion</h2>
+            <p>
+                This architecture provides a comprehensive foundation for a text-based RPG system powered by LLM intelligence. 
+                The LLM-centric approach eliminates the need for complex rule systems while maintaining flexibility and intelligence. 
+                With proper cache optimization and smart activation strategies, the system can support 50-100 instances for under $3/month, 
+                making it extremely viable for personal use or commercial deployment.
+            </p>
+            <p>
+                The distributed memory architecture ensures efficient context usage, while the player-centric time system creates 
+                an immersive experience. The system's ability to handle complex world interactions through LLM intelligence, 
+                combined with cost-effective operation, makes it a powerful platform for dynamic, living world RPG experiences.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
